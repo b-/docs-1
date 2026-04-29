@@ -577,8 +577,9 @@ When a kit doesn't behave as expected, start with the network policy log
 and direct inspection inside the sandbox:
 
 - `sbx policy log` shows every outbound request the sandbox proxy saw,
-  the rule it matched, and how it was forwarded (`forward-bypass`,
-  `forward`, `block`). Use it to diagnose install-time download failures,
+  the rule it matched, extra context when available, and its `PROXY`
+  value, such as `forward`, `forward-bypass`, `transparent`, or
+  `browser-open`. Use it to diagnose install-time download failures,
   blocked domains, and unexpected TLS interception. If downloads fail or
   arrive corrupted after you add `serviceDomains`, check whether the
   service mapping is too broad. Map only the hosts that need credential
