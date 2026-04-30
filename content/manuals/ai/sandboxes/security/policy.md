@@ -166,22 +166,28 @@ Use `sbx policy log` to see which hosts your sandboxes have contacted:
 ```console
 $ sbx policy log
 Blocked requests:
-SANDBOX      TYPE     HOST                   PROXY        RULE       LAST SEEN        COUNT
-my-sandbox   network  blocked.example.com    transparent  policykit  10:15:25 29-Jan  1
+SANDBOX      TYPE     HOST                   PROXY        RULE            REASON         LAST SEEN        COUNT
+my-sandbox   network  blocked.example.com    transparent  domain-blocked  default-deny   10:15:25 29-Jan  1
 
 Allowed requests:
-SANDBOX      TYPE     HOST                   PROXY        RULE       LAST SEEN        COUNT
-my-sandbox   network  api.anthropic.com      forward      policykit  10:15:23 29-Jan  42
-my-sandbox   network  registry.npmjs.org     transparent  policykit  10:15:20 29-Jan  18
+SANDBOX      TYPE     HOST                   PROXY          RULE             REASON   LAST SEEN        COUNT
+my-sandbox   network  api.anthropic.com      forward        domain-allowed            10:15:23 29-Jan  42
+my-sandbox   network  registry.npmjs.org     forward-bypass domain-allowed            10:15:20 29-Jan  18
+my-sandbox   network  app.example.com        browser-open                             10:15:10 29-Jan  1
 ```
 
 The **PROXY** column shows how the request left the sandbox:
 
-| Value         | Description                                                                                                    |
-| ------------- | -------------------------------------------------------------------------------------------------------------- |
-| `forward`     | Routed through the forward proxy. Supports [credential injection](credentials.md).                             |
-| `transparent` | Intercepted by the transparent proxy. Policy is enforced but credential injection is not available.            |
-| `network`     | Non-HTTP traffic (raw TCP, UDP, ICMP). TCP can be allowed with a policy rule; UDP and ICMP are always blocked. |
+| Value            | Description                                                                                                    |
+| ---------------- | -------------------------------------------------------------------------------------------------------------- |
+| `forward`        | Routed through the forward proxy. Supports [credential injection](credentials.md).                             |
+| `forward-bypass` | Routed through the forward proxy without credential injection.                                                 |
+| `transparent`    | Intercepted by the transparent proxy. Policy is enforced but credential injection is not available.            |
+| `network`        | Non-HTTP traffic (raw TCP, UDP, ICMP). TCP can be allowed with a policy rule; UDP and ICMP are always blocked. |
+| `browser-open`   | A sandbox process requested opening a URL in the host browser. Policy is enforced before opening the URL.      |
+
+The **RULE** column identifies the policy rule that matched the request. The
+**REASON** column includes extra context when the daemon records one.
 
 Filter by sandbox name by passing it as an argument:
 
