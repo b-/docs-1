@@ -4,7 +4,6 @@ description: Control access to content, registry, and organization management wi
 keywords: members, teams, organization, company, roles, access, docker hub, admin console, security, permissions
 aliases:
   - /docker-hub/roles-and-permissions/
-  - /security/for-admins/roles-and-permissions/
   - /enterprise/security/roles-and-permissions/
 ---
 
