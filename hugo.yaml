@@ -129,7 +129,7 @@ outputs:
 
 languages:
   en:
-    languageName: English
+    label: English
 
 # Site-wide parameters
 # Can be accessed in content with {{% param "param_name" %}}
